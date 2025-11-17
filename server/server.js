@@ -1,3 +1,37 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Hotel Schema
+const hotelSchema = new mongoose.Schema({
+  name: String,
+  location: String,
+  city: String,
+  country: String,
+  price: Number,
+  rating: Number,
+  imageUrl: String,
+  bookingUrl: String,
+  description: String,
+  amenities: [String],
+  dateAdded: { type: Date, default: Date.now }
+});
+
+const Hotel = mongoose.model('Hotel', hotelSchema);
+
+// Routes
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'Server is running!', timestamp: new Date() });
+});
+
 // Get all favorite hotels
 app.get('/api/favorites', async (req, res) => {
   try {
@@ -30,7 +64,7 @@ app.delete('/api/favorites/:id', async (req, res) => {
 });
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/booking-favorite>
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/booking-favorites')
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('MongoDB Error:', err));
 
