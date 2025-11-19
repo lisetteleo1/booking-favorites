@@ -1,0 +1,62 @@
+<div class="favorites-container">
+  <header class="header">
+    <div class="header-content">
+      <h1 class="logo">Booking.com</h1>
+      <nav class="nav">
+        <a href="#" class="nav-link">Stays</a>
+        <a href="#" class="nav-link">Flights</a>
+        <a href="#" class="nav-link">Car rentals</a>
+        <a href="#" class="nav-link active">Favorites</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="search-section">
+    <div class="search-content">
+      <h2 class="search-title">Find your next stay</h2>
+      <p class="search-subtitle">Search deals on hotels, homes, and much more...</p>
+      
+      <div class="search-bar">
+        <div class="search-field">
+          <label>Where are you going?</label>
+          <input type="text" placeholder="State College, PA" />
+        </div>
+        <div class="search-field">
+          <label>Check-in date</label>
+          <input type="date" />
+        </div>
+        <div class="search-field">
+          <label>Check-out date</label>
+          <input type="date" />
+        </div>
+        <button class="search-button">Search</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="favorites-section">
+    <div class="content-wrapper">
+      <div class="section-header">
+        <h2 class="section-title">Your Favorite Hotels</h2>
+        <p class="section-subtitle">Browse your saved properties</p>
+      </div>
+
+      <div *ngIf="isLoading" class="loading">
+        <p>Loading your favorites...</p>
+      </div>
+
+      <div *ngIf="!isLoading && favoriteHotels.length === 0" class="empty-state">
+        <p>You haven't added any favorites yet.</p>
+        <a href="#" class="browse-link">Browse hotels to get started</a>
+      </div>
+
+      <div *ngIf="!isLoading && favoriteHotels.length > 0" class="hotels-grid">
+        <app-hotel-card 
+          *ngFor="let hotel of favoriteHotels"
+          [hotel]="hotel"
+          (favoriteToggle)="onFavoriteToggle($event)">
+        </app-hotel-card>
+      </div>
+    </div>
+  </section>
+</div>

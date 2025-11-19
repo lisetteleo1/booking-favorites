@@ -1,0 +1,31 @@
+<div class="hotel-card">
+  <div class="image-container">
+    <img [src]="hotel.imageUrl" [alt]="hotel.name" class="hotel-image" />
+    <app-favorite-button 
+      [isFavorite]="hotel.isFavorite || false"
+      (click)="onFavoriteClick()"
+      class="favorite-btn">
+    </app-favorite-button>
+  </div>
+  
+  <div class="hotel-info">
+    <h3 class="hotel-name">{{ hotel.name }}</h3>
+    <p class="hotel-location">{{ hotel.location }}</p>
+    <p class="hotel-description">{{ hotel.description }}</p>
+    
+    <div class="amenities" *ngIf="hotel.amenities && hotel.amenities.length > 0">
+      <span class="amenity" *ngFor="let amenity of hotel.amenities">{{ amenity }}</span>
+    </div>
+    
+    <div class="hotel-footer">
+      <div class="rating">
+        <span class="rating-score">{{ hotel.rating }}</span>
+        <span class="rating-text">Excellent</span>
+      </div>
+      <div class="price-section">
+        <span class="price">${{ hotel.price }}</span>
+        <span class="price-label">per night</span>
+      </div>
+    </div>
+  </div>
+</div>

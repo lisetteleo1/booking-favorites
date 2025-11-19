@@ -1,0 +1,53 @@
+.favorite-button {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.favorite-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+  transform: scale(1.1);
+}
+
+.favorite-button:active {
+  transform: scale(0.95);
+}
+
+.favorite-button.is-favorite {
+  background-color: rgba(255, 56, 92, 0.2);
+}
+
+.favorite-button.is-favorite:hover {
+  background-color: rgba(255, 56, 92, 0.3);
+}
+
+.favorite-button svg {
+  transition: all 0.3s ease;
+}
+
+.favorite-button.is-favorite svg {
+  animation: heartBeat 0.3s ease;
+}
+
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+}
