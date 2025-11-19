@@ -2,12 +2,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const { errorHandler } = require("./middleware/errorHandler.js"); // <--- added
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS Settings
+app.use(
+  cors({
+    origin: "http://localhost:4200", // Angular frontend URL
+    credentials: true,
+  })
+);
+
 // Middleware
-app.use(cors());
 app.use(express.json());
 
 // Hotel Schema
@@ -67,6 +75,9 @@ app.delete('/api/favorites/:id', async (req, res) => {
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/booking-favorites')
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log('MongoDB Error:', err));
+
+// Error Handler
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
