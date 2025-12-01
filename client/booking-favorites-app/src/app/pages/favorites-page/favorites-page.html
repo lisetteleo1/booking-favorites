@@ -6,7 +6,8 @@
         <a href="#" class="nav-link">Stays</a>
         <a href="#" class="nav-link">Flights</a>
         <a href="#" class="nav-link">Car rentals</a>
-        <a href="#" class="nav-link active">Favorites</a>
+        <a routerLink="/favorites" class="nav-link active">Favorites</a>
+        <a routerLink="/login" class="nav-link login-link">Login</a>
       </nav>
     </div>
   </header>
@@ -41,16 +42,21 @@
         <p class="section-subtitle">Browse your saved properties</p>
       </div>
 
-      <div *ngIf="isLoading" class="loading">
+      <div *ngIf="error" class="error-message">
+        <p>{{ error }}</p>
+        <a routerLink="/login" class="browse-link">Click here to log in</a>
+      </div>
+
+      <div *ngIf="isLoading && !error" class="loading">
         <p>Loading your favorites...</p>
       </div>
 
-      <div *ngIf="!isLoading && favoriteHotels.length === 0" class="empty-state">
+      <div *ngIf="!isLoading && !error && favoriteHotels.length === 0" class="empty-state">
         <p>You haven't added any favorites yet.</p>
         <a href="#" class="browse-link">Browse hotels to get started</a>
       </div>
 
-      <div *ngIf="!isLoading && favoriteHotels.length > 0" class="hotels-grid">
+      <div *ngIf="!isLoading && !error && favoriteHotels.length > 0" class="hotels-grid">
         <app-hotel-card 
           *ngFor="let hotel of favoriteHotels"
           [hotel]="hotel"

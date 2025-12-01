@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hotel } from '../../models/hotel.model';
-import { MOCK_HOTELS } from '../../data/mock-hotels';
+import { HotelsService } from '../../services/hotels.service';
 
 @Component({
   selector: 'app-favorites-page',
@@ -11,21 +11,29 @@ import { MOCK_HOTELS } from '../../data/mock-hotels';
 export class FavoritesPage implements OnInit {
   favoriteHotels: Hotel[] = [];
   isLoading: boolean = true;
+  error: string = '';
+
+  constructor(private hotelsService: HotelsService) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.favoriteHotels = MOCK_HOTELS.filter(hotel => hotel.isFavorite);
-      this.isLoading = false;
-    }, 500);
+    this.loadHotels();
+  }
+
+  loadHotels(): void {
+    this.hotelsService.getAllHotels().subscribe({
+      next: (hotels) => {
+        this.favoriteHotels = hotels;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading hotels:', err);
+        this.error = 'Failed to load hotels';
+        this.isLoading = false;
+      }
+    });
   }
 
   onFavoriteToggle(hotelId: string): void {
-    const hotel = this.favoriteHotels.find(h => h.id === hotelId);
-    if (hotel) {
-      hotel.isFavorite = !hotel.isFavorite;
-      if (!hotel.isFavorite) {
-        this.favoriteHotels = this.favoriteHotels.filter(h => h.id !== hotelId);
-      }
-    }
+    console.log('Favorite toggled:', hotelId);
   }
 }
