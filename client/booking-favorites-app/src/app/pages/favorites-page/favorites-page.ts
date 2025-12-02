@@ -22,12 +22,14 @@ export class FavoritesPage implements OnInit {
   loadHotels(): void {
     this.hotelsService.getAllHotels().subscribe({
       next: (hotels) => {
-        this.favoriteHotels = hotels;
+        // Mark all as favorites for demo
+        this.favoriteHotels = hotels.map(hotel => ({...hotel, isFavorite: true}));
         this.isLoading = false;
+        console.log('Loaded hotels:', this.favoriteHotels);
       },
       error: (err) => {
         console.error('Error loading hotels:', err);
-        this.error = 'Failed to load hotels';
+        this.error = 'Unable to load hotels. Please try again later.';
         this.isLoading = false;
       }
     });
